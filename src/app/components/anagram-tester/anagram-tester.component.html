@@ -9,8 +9,5 @@
         <input #secondWord="ngModel" ngModel name="secondWord" type="text" class="form-control"
             placeholder="Second Word" required>
     </div>
-    <small *ngIf="error" class="text-danger">
-        {{error}}
-    </small>
     <button [disabled]="!anagramForm.valid" type="submit" class="btn btn-primary mt-5">SUBMIT</button>
 </form>

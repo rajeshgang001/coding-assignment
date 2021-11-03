@@ -1,7 +1,7 @@
 <form #registerForm="ngForm" (ngSubmit)="onRegister(registerForm)" class="row g-3 m-5">
     <div class="m-3">
         <label class="form-label">FIRST NAME: </label>
-        <input pattern="^[a-zA-Z\s,-]{5,}" #firstName="ngModel" ngModel name="firstName" type="text"
+        <input pattern="^[a-zA-Z\s,-]{6,}" #firstName="ngModel" ngModel name="firstName" type="text"
             class="form-control" placeholder="First Name" required>
         <small *ngIf="firstName.touched && firstName.errors?.required" class="text-danger">
             * Field is required
@@ -12,7 +12,7 @@
     </div>
     <div class="m-3">
         <label class="form-label">LAST NAME: </label>
-        <input pattern="^[a-zA-Z\s,-]{5,}" #lastName="ngModel" ngModel name="lastName" type="text" class="form-control"
+        <input pattern="^[a-zA-Z\s,-]{6,}" #lastName="ngModel" ngModel name="lastName" type="text" class="form-control"
             placeholder="Last Name" required>
         <small *ngIf="lastName.touched && lastName.errors?.required" class="text-danger">
             * Field is required
