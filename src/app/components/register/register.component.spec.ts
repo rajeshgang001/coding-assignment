@@ -91,7 +91,7 @@ fdescribe('RegisterComponent', () => {
   it('country should not be empty', async () => {
     fixture.whenStable().then(() => {
       let country = component.registerForm.form.controls['country'];
-      country.setValue('');
+      country.setValue(undefined);
       expect(country.errors['required']).toBeTruthy();
     });
   });
