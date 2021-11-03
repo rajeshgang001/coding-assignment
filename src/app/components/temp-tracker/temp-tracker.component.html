@@ -1,0 +1,26 @@
+<form #tempTrackerForm="ngForm" (ngSubmit)="onInsert(tempTrackerForm)" class="row g-3 m-5">
+  <div class="m-3">
+    <label class="form-label">TEMPERATURE: </label>
+    <input pattern="^(150|1[0-4][0-9]|0?[0-9]{1,2})" #temperature="ngModel" ngModel name="temperature" type="number"
+      class="form-control" placeholder="Enter Temperature" required>
+    <small *ngIf="temperature.touched && temperature.errors?.required" class="text-danger">
+      * Field is required
+    </small>
+    <small *ngIf="temperature.touched && temperature.errors?.pattern" class="text-danger">
+      * Number should between 0 to 150 only
+    </small>
+  </div>
+  <div>
+    <button [disabled]="!tempTrackerForm.valid" type="submit" class="btn btn-primary mt-5">INSERT</button>
+    <button (click)="onReset()" type="button" class="btn btn-secondary mt-5 float-end">RESET</button>
+  </div>
+</form>
+
+<div class="m-5" *ngIf="temperaturesArray.length">
+  <p>Temperatures Array :[<span *ngFor="let item of temperaturesArray;;let last = last">{{item}}<i
+        *ngIf="!last">,</i></span>]</p>
+  <p>Minimum: <span>{{minValue}}</span></p>
+  <p>Maximum: <span>{{maxValue}}</span></p>
+  <p>Mean: <span>{{meanValue}}</span></p>
+  <p>Mode: <span>{{modeValue}}</span></p>
+</div>

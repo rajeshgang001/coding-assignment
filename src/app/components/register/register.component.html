@@ -1,0 +1,48 @@
+<form #registerForm="ngForm" (ngSubmit)="onRegister(registerForm)" class="row g-3 m-5">
+    <div class="m-3">
+        <label class="form-label">FIRST NAME: </label>
+        <input pattern="^[a-zA-Z\s,-]{5,}" #firstName="ngModel" ngModel name="firstName" type="text"
+            class="form-control" placeholder="First Name" required>
+        <small *ngIf="firstName.touched && firstName.errors?.required" class="text-danger">
+            * Field is required
+        </small>
+        <small *ngIf="firstName.touched && firstName.errors?.pattern" class="text-danger">
+            * Name should have only charecters more than 5
+        </small>
+    </div>
+    <div class="m-3">
+        <label class="form-label">LAST NAME: </label>
+        <input pattern="^[a-zA-Z\s,-]{5,}" #lastName="ngModel" ngModel name="lastName" type="text" class="form-control"
+            placeholder="Last Name" required>
+        <small *ngIf="lastName.touched && lastName.errors?.required" class="text-danger">
+            * Field is required
+        </small>
+        <small *ngIf="lastName.touched && lastName.errors?.pattern" class="text-danger">
+            * Name should have only charecters more than 5
+        </small>
+    </div>
+    <div class="m-3">
+        <label class="form-label">PHONE NUMBER: </label>
+        <input pattern="^\d*[0-9]\d*$" #phoneNumber="ngModel" ngModel name="phoneNumber" type="number" class="form-control"
+            placeholder="Phone Number" required>
+        <small *ngIf="phoneNumber.touched && phoneNumber.errors?.required" class="text-danger">
+            * Field is required
+        </small>
+        <small *ngIf="phoneNumber.touched && phoneNumber.errors?.pattern" class="text-danger">
+            * Field contain only positive numbers
+        </small>
+    </div>
+    <div class="m-3">
+        <label class="form-label">SELECT COUNTRY: </label>
+        <select #country="ngModel" ngModel name="country" class="form-select" aria-label="Default select example"
+            required>
+            <option value="1">INDIA</option>
+            <option value="2">USA</option>
+            <option value="3">CANADA</option>
+        </select>
+        <small *ngIf="country.touched && firstName.errors?.required" class="text-danger">
+            * Field is required
+        </small>
+    </div>
+    <button [disabled]="!registerForm.valid" type="submit" class="btn btn-primary mt-5">SUBMIT</button>
+</form>
