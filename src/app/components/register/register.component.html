@@ -40,7 +40,7 @@
             <option value="2">USA</option>
             <option value="3">CANADA</option>
         </select>
-        <small *ngIf="country.touched && firstName.errors?.required" class="text-danger">
+        <small *ngIf="country.touched && country.errors?.required" class="text-danger">
             * Field is required
         </small>
     </div>
