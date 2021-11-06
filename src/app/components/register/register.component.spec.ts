@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { RegisterComponent } from './register.component';
 
@@ -10,7 +10,7 @@ fdescribe('RegisterComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [RegisterComponent],
-      imports: [FormsModule, RouterTestingModule]
+      imports: [ReactiveFormsModule, RouterTestingModule]
     })
       .compileComponents();
   });
@@ -20,79 +20,96 @@ fdescribe('RegisterComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-  it('first name and last names should not be empty', async () => {
-    fixture.whenStable().then(() => {
-      let firstName = component.registerForm.form.controls['firstName'];
-      let lastName = component.registerForm.form.controls['lastName'];
-      firstName.setValue('');
-      lastName.setValue('');
-      expect(firstName.errors['required']).toBeTruthy();
-      expect(lastName.errors['required']).toBeTruthy();
-    });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
   });
-  it('first name and last names chatecters should be greater than 5', async () => {
-    fixture.whenStable().then(() => {
-      let firstName = component.registerForm.form.controls['firstName'];
-      let lastName = component.registerForm.form.controls['lastName'];
-      firstName.setValue('robs');
-      lastName.setValue('robs');
-      expect(firstName.errors['pattern']).toBeTruthy();
-      expect(lastName.errors['pattern']).toBeTruthy();
-    });
+  it('should have a firstName input field ', () => {
+    const firstName = component.registerForm.controls.firstName;
+    expect(firstName.valid).toBeFalsy();
+    expect(firstName.hasError('required')).toBeTruthy();
+    expect(firstName.pristine).toBeTruthy();
   });
-  it('first name should not contain numbers', async () => {
-    fixture.whenStable().then(() => {
-      let firstName = component.registerForm.form.controls['firstName'];
-      let lastName = component.registerForm.form.controls['lastName'];
-      firstName.setValue('robs1');
-      lastName.setValue('robs1');
-      expect(firstName.errors['pattern']).toBeTruthy();
-      expect(lastName.errors['pattern']).toBeTruthy();
-    });
+  it('first name should not be empty', () => {
+    const firstName = component.registerForm.controls.firstName;
+    firstName.setValue('');
+    expect(firstName.hasError('required')).toBeTruthy();
   });
-  it('first name should have min 5 charecters', async () => {
-    fixture.whenStable().then(() => {
-      let firstName = component.registerForm.form.controls['firstName'];
-      let lastName = component.registerForm.form.controls['lastName'];
-      firstName.setValue('rob steve');
-      lastName.setValue('rob steve');
-      expect(firstName.valid).toBeTruthy();
-      expect(lastName.valid).toBeTruthy();
-    });
+  it('first name should not contain numbers', () => {
+    const firstName = component.registerForm.controls.firstName;
+    firstName.setValue('robs1');
+    expect(firstName.hasError('pattern')).toBeTruthy();
   });
-  it('phone number should not be empty', async () => {
-    fixture.whenStable().then(() => {
-      let phoneNumber = component.registerForm.form.controls['phoneNumber'];
-      phoneNumber.setValue('');
-      expect(phoneNumber.errors['required']).toBeTruthy();
-    });
+  it('first name should not be less than 6 charecters', () => {
+    const firstName = component.registerForm.controls.firstName;
+    firstName.setValue('robss');
+    expect(firstName.hasError('pattern')).toBeTruthy();
   });
-  it('phone number should have negative numbers', async () => {
-    fixture.whenStable().then(() => {
-      let phoneNumber = component.registerForm.form.controls['phoneNumber'];
-      phoneNumber.setValue('-123');
-      expect(phoneNumber.errors['pattern']).toBeTruthy();
-    });
+  it('first name should be more than or equal to 6 charecters', () => {
+    const firstName = component.registerForm.controls.firstName;
+    firstName.setValue('steves');
+    expect(firstName.hasError('required')).toBeFalsy();
+    expect(firstName.hasError('pattern')).toBeFalsy();
+    expect(firstName.valid).toBeTruthy();
   });
-  it('phone number should not have charecters', async () => {
-    fixture.whenStable().then(() => {
-      let phoneNumber = component.registerForm.form.controls['phoneNumber'];
-      phoneNumber.setValue('rob');
-      expect(phoneNumber.errors['pattern']).toBeTruthy();
-    });
+  it('should have a lastName input field ', () => {
+    const lastName = component.registerForm.controls.lastName;
+    expect(lastName.valid).toBeFalsy();
+    expect(lastName.hasError('required')).toBeTruthy();
+    expect(lastName.pristine).toBeTruthy();
   });
-  it('phone number should have only positive numbers', async () => {
-    fixture.whenStable().then(() => {
-      let phoneNumber = component.registerForm.form.controls['phoneNumber'];
-      phoneNumber.setValue('123');
-      expect(phoneNumber.valid).toBeTruthy();
-    });
+  it('last name should not be empty', () => {
+    const lastName = component.registerForm.controls.lastName;
+    lastName.setValue('');
+    expect(lastName.hasError('required')).toBeTruthy();
   });
-  it('country should not be empty', async () => {
-    fixture.whenStable().then(() => {
-      let country = component.registerForm.form.controls['country'];
-      country.setValue(undefined);
-      expect(country.errors['required']).toBeTruthy();
-    });
+  it('last name should not contain numbers', () => {
+    const lastName = component.registerForm.controls.lastName;
+    lastName.setValue('robs1');
+    expect(lastName.hasError('pattern')).toBeTruthy();
+  });
+  it('last name should not be less than 6 charecters', () => {
+    const lastName = component.registerForm.controls.lastName;
+    lastName.setValue('robss');
+    expect(lastName.hasError('pattern')).toBeTruthy();
+  });
+  it('last name should be more than or equal to 6 charecters', () => {
+    const lastName = component.registerForm.controls.lastName;
+    lastName.setValue('robert');
+    expect(lastName.hasError('required')).toBeFalsy();
+    expect(lastName.hasError('pattern')).toBeFalsy();
+    expect(lastName.valid).toBeTruthy();
+  });
+  it('should have a phoneNumber input field ', () => {
+    const phoneNumber = component.registerForm.controls.phoneNumber;
+    expect(phoneNumber.valid).toBeFalsy();
+    expect(phoneNumber.hasError('required')).toBeTruthy();
+    expect(phoneNumber.pristine).toBeTruthy();
+  });
+  it('phone number should not be empty', () => {
+    const phoneNumber = component.registerForm.controls.phoneNumber;
+    phoneNumber.setValue('');
+    expect(phoneNumber.hasError('required')).toBeTruthy();
+  });
+  it('phone number should contain valid input value', () => {
+    const phoneNumber = component.registerForm.controls.phoneNumber;
+    phoneNumber.setValue('985623214');
+    expect(phoneNumber.valid).toBeTruthy();
+  });
+  it('should have a country input field ', () => {
+    const country = component.registerForm.controls.country;
+    expect(country.valid).toBeFalsy();
+    expect(country.hasError('required')).toBeTruthy();
+    expect(country.pristine).toBeTruthy();
+  });
+  it('country should not be empty', () => {
+    const phoneNumber = component.registerForm.controls.phoneNumber;
+    phoneNumber.setValue(undefined);
+    expect(phoneNumber.hasError('required')).toBeTruthy();
+  });
+  it('country should contain valid input value', () => {
+    const phoneNumber = component.registerForm.controls.phoneNumber;
+    phoneNumber.setValue('1');
+    expect(phoneNumber.valid).toBeTruthy();
   });
 });

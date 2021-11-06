@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -9,14 +9,29 @@ import { Router } from '@angular/router';
 })
 
 export class RegisterComponent implements OnInit {
-  @ViewChild('registerForm', { static: true }) registerForm: NgForm;
+  registerForm: FormGroup;
 
-  constructor(private _router: Router) { }
+  constructor(private router: Router, private fb: FormBuilder) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.initregisterForm();
+  }
 
-  onRegister(form: NgForm) {
+  initregisterForm(): void {
+    this.registerForm = this.fb.group({
+      firstName: ['', [Validators.required, Validators.pattern('^[a-zA-Z\s,-]{6,}')]],
+      lastName: ['', [Validators.required, Validators.pattern('^[a-zA-Z\s,-]{6,}')]],
+      phoneNumber: ['', Validators.required],
+      country: ['', Validators.required]
+    });
+  }
+
+  get controls(): any {
+    return this.registerForm.controls;
+  }
+
+  onRegister(): void {
     alert('Succesfully registered.Now you are redicted to main page.');
-    this._router.navigate(['/actions/anagram-tester']);
+    this.router.navigate(['/actions/anagram-tester']);
   }
 }

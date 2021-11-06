@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-anagram-tester',
@@ -8,14 +8,35 @@ import { NgForm } from '@angular/forms';
 })
 
 export class AnagramTesterComponent implements OnInit {
+  anagramForm: FormGroup;
 
-  constructor() { }
+  constructor(private fb: FormBuilder) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.initAnagramForm();
+  }
 
-  onCheckAnagram(form: NgForm) {
-      if (form.value.firstWord.split("").sort().join("") === form.value.secondWord.split("").sort().join(""))
-        alert('Both words are anagrams');
-      else alert('Both words are NOT anagrams');
+  initAnagramForm(): void {
+    this.anagramForm = this.fb.group({
+      firstWord: ['', Validators.required],
+      secondWord: ['', Validators.required]
+    });
+  }
+
+  get controls(): any {
+    return this.anagramForm.controls;
+  }
+
+  onCheckAnagram(): boolean {
+    const firstWord = this.anagramForm.controls.firstWord.value.split('').sort().join('');
+    const secondWord = this.anagramForm.controls.secondWord.value.split('').sort().join('');
+    if (firstWord === secondWord) {
+      alert('Both words are anagrams');
+      return true;
+    }
+    else {
+      alert('Both words are NOT anagrams');
+      return false;
+    }
   }
 }

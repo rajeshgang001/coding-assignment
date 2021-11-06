@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-temp-tracker',
@@ -8,6 +8,7 @@ import { NgForm } from '@angular/forms';
 })
 
 export class TempTrackerComponent implements OnInit {
+  tempTrackerForm: FormGroup;
   temperaturesArray = [];
   private min: number;
   private max: number;
@@ -27,45 +28,57 @@ export class TempTrackerComponent implements OnInit {
     return this.mode;
   }
 
-  constructor() { }
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
+    this.initTempTrackerForm();
   }
 
-  onInsert(form: NgForm) {
-    this.temperaturesArray.push(form.value.temperature);
+  initTempTrackerForm(): void {
+    this.tempTrackerForm = this.fb.group({
+      temperature: ['', [Validators.required, Validators.pattern('^(150|1[0-4][0-9]|0?[0-9]{1,2})')]],
+    });
+  }
+
+  get controls(): any {
+    return this.tempTrackerForm.controls;
+  }
+
+  onInsert(): void {
+    this.temperaturesArray.push(this.tempTrackerForm.controls.temperature.value);
     this.getMin();
     this.getMax();
     this.getMean();
     this.getMode();
-    form.reset();
+    this.tempTrackerForm.reset();
   }
 
-  getMin() {
+  getMin(): void {
     this.min = Math.min(...this.temperaturesArray);
   }
 
-  getMax() {
+  getMax(): void {
     this.max = Math.max(...this.temperaturesArray);
   }
 
-  getMean() {
-    let totalCount: number = this.temperaturesArray.length;
-    let totalSum: number = 0;
+  getMean(): void {
+    const totalCount: number = this.temperaturesArray.length;
+    let totalSum = 0;
     this.temperaturesArray.forEach((element: number) => {
       totalSum += element;
     });
     this.mean = totalSum / totalCount;
   }
 
-  getMode() {
+  getMode(): void {
     this.mode = [...this.temperaturesArray].sort((a, b) =>
       this.temperaturesArray.filter(v => v === a).length
       - this.temperaturesArray.filter(v => v === b).length
     ).pop();
   }
 
-  onReset() {
+  onReset(): void {
     this.temperaturesArray = [];
+    this.tempTrackerForm.reset();
   }
 }

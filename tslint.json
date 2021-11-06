@@ -8,6 +8,10 @@
       "options": [
         "parameters",
         "statements"
+      ],
+      "variable-name": [
+        true,
+        "allow-leading-underscore"
       ]
     },
     "array-type": false,
@@ -113,6 +117,7 @@
     },
     "whitespace": {
       "options": [
+        false,
         "check-branch",
         "check-decl",
         "check-operator",

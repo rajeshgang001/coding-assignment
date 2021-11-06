@@ -1,13 +1,17 @@
-<form #anagramForm="ngForm" (ngSubmit)="onCheckAnagram(anagramForm)" class="row g-3 m-5">
+<form [formGroup]="anagramForm" (ngSubmit)="onCheckAnagram()" class="row g-3 m-5">
     <div class="m-3">
         <label class="form-label">FIRST WORD: </label>
-        <input #firstWord="ngModel" ngModel name="firstWord" type="text" class="form-control" placeholder="First Word"
-            required>
+        <input formControlName="firstWord" type="text" class="form-control" placeholder="First Word">
+        <small *ngIf="controls.firstWord.touched && controls.firstWord.errors?.required" class="text-danger">
+            * Field is required
+        </small>
     </div>
     <div class="m-3">
         <label class="form-label">SECOND WORD: </label>
-        <input #secondWord="ngModel" ngModel name="secondWord" type="text" class="form-control"
-            placeholder="Second Word" required>
+        <input formControlName="secondWord" type="text" class="form-control" placeholder="Second Word">
+        <small *ngIf="controls.secondWord.touched && controls.secondWord.errors?.required" class="text-danger">
+            * Field is required
+        </small>
     </div>
     <button [disabled]="!anagramForm.valid" type="submit" class="btn btn-primary mt-5">SUBMIT</button>
 </form>
