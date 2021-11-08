@@ -9,7 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 export class AnagramTesterComponent implements OnInit {
   anagramForm: FormGroup;
-
+  anagramMsg: string;
   constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
@@ -31,11 +31,11 @@ export class AnagramTesterComponent implements OnInit {
     const firstWord = this.anagramForm.controls.firstWord.value.split('').sort().join('');
     const secondWord = this.anagramForm.controls.secondWord.value.split('').sort().join('');
     if (firstWord === secondWord) {
-      alert('Both words are anagrams');
+      this.anagramMsg = 'Both words are Anagrams';
       return true;
     }
     else {
-      alert('Both words are NOT anagrams');
+      this.anagramMsg = 'Both words are NOT Anagrams';
       return false;
     }
   }
